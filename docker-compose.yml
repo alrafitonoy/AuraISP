@@ -1,0 +1,56 @@
+# Production-style stack with load balancing:  MariaDB  ←  3 × AuraISP (each multi-core)  ←  Nginx
+#   1) cp server/.env.example server/.env   and set APP_KEY (openssl rand -base64 32), APP_URL, VAPID keys
+#   2) DB_PASSWORD=$(openssl rand -base64 24) docker compose up -d --build
+#   3) docker compose exec app node scripts/setup.js --email you@example.com
+# Then put TLS in front of port 8080 (or extend deploy/nginx-loadbalancer.conf).
+services:
+  db:
+    image: mariadb:11.4
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: aura_isp
+      MARIADB_USER: aura_app
+      MARIADB_PASSWORD: ${DB_PASSWORD:?set DB_PASSWORD}
+      MARIADB_RANDOM_ROOT_PASSWORD: "yes"
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci", "--local-infile=0", "--skip-name-resolve", "--max-connections=400"]
+    volumes: ["aura-db:/var/lib/mysql"]
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      retries: 10
+    networks: [backend]
+
+  app:
+    build: .
+    restart: unless-stopped
+    env_file: ./server/.env
+    environment:
+      DB_CLIENT: mysql
+      DB_HOST: db
+      DB_PORT: "3306"
+      DB_NAME: aura_isp
+      DB_USER: aura_app
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_SSL: disable          # private Docker network only
+      WEB_CONCURRENCY: max     # built-in per-core load balancing inside each replica
+      TRUST_PROXY: "1"
+    deploy:
+      replicas: 3              # horizontal scaling behind the load balancer
+    volumes: ["aura-data:/app/server/data"]
+    depends_on:
+      db: { condition: service_healthy }
+    networks: [backend]
+
+  lb:
+    image: nginx:1.27-alpine
+    restart: unless-stopped
+    ports: ["8080:80"]
+    volumes: ["./deploy/nginx-docker-lb.conf:/etc/nginx/conf.d/default.conf:ro"]
+    depends_on: [app]
+    networks: [backend]
+
+volumes:
+  aura-db:
+  aura-data:
+networks:
+  backend:

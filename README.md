@@ -1,15 +1,3 @@
-# AuraISP
-ISP Management Software
-
-
-<img width="2160" height="2700" alt="01-platform" src="https://github.com/user-attachments/assets/437a8d52-f06d-4ec9-98a7-a1dac7293d85" />
-<img width="2160" height="2700" alt="02-billing" src="https://github.com/user-attachments/assets/fe704900-02a9-4eec-be68-8ab66664eae6" />
-<img width="2160" height="2700" alt="04-apps" src="https://github.com/user-attachments/assets/afb37ed5-cba0-4a7f-93ba-fcd5a0a921de" />
-<img width="2160" height="2700" alt="03-network" src="https://github.com/user-attachments/assets/5f342ebe-b3c8-4763-90bd-a77fea86e53d" />
-
-#How to Download
-First, download the .zip file and extract it. Then follow the instructions below.
-
 # AuraISP — ISP Billing, Network Control & CRM Platform
 
 AuraISP is a complete, self-hosted platform for internet service providers. It covers customer self-service, billing and
