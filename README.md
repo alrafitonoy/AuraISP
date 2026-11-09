@@ -1,4 +1,14 @@
+<img width="2000" height="2000" alt="Aura ISP Logo" src="https://github.com/user-attachments/assets/38491a5b-9587-4086-9bbb-dd4c4fc404ff" />
+.....
+<img width="2160" height="2700" alt="03-network" src="https://github.com/user-attachments/assets/6a883dab-f95a-43e9-9e5f-750428f91bcb" />
+<img width="2160" height="2700" alt="02-billing" src="https://github.com/user-attachments/assets/cd619c82-81ae-4cde-be14-d4344dc812c7" />
+<img width="2160" height="2700" alt="01-platform" src="https://github.com/user-attachments/assets/08e7f058-4bd4-4761-89aa-cd793e377b77" />
+<img width="2160" height="2700" alt="04-apps" src="https://github.com/user-attachments/assets/8b009537-dc4c-44d4-bea8-024c144218cf" />
+
+
 # AuraISP — ISP Billing, Network Control & CRM Platform
+
+<h1>To install it, download the .zip file first</h1>
 
 AuraISP is a complete, self-hosted platform for internet service providers. It covers customer self-service, billing and
 online payments, bandwidth and IP management on MikroTik routers, strict usage enforcement, parental controls, support with
